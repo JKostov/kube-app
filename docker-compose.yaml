@@ -16,6 +16,7 @@ services:
       - NODE_ENV=development
       - APP_PORT=3000
       - KAFKA_URL=kube-kafka:9092
+      - MONGO_URL=mongodb://root:root1234@kube-custer-mongo:27017/database
     depends_on:
       - kube-custer-mongo
       - kube-kafka
@@ -47,6 +48,7 @@ services:
       - NODE_ENV=development
       - APP_PORT=3001
       - KAFKA_URL=kube-kafka:9092
+      - MONGO_URL=mongodb://root:root1234@kube-resource-mongo:27017/database
     depends_on:
       - kube-resource-mongo
       - kube-kafka
