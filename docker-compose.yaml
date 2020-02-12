@@ -1,0 +1,94 @@
+version: "3.7"
+
+services:
+  kube-cluster:
+    build:
+      context: ./kube-cluster
+      args:
+        - NODE_ENV=development
+    image: kube-cluster
+    container_name: kube-cluster
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./kube-cluster:/app
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - kube-custer-mongo
+      - kube-kafka
+
+  kube-custer-mongo:
+    image: jkostov/mongo:4.2
+    container_name: kube-custer-mongo
+    expose:
+      - "27017"
+    volumes:
+      - kube-cluster-mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root1234
+      - MONGO_INITDB_DATABASE=database
+
+  kube-resource:
+    build:
+      context: ./kube-resource
+      args:
+        - NODE_ENV=development
+    image: kube-resource
+    container_name: kube-resource
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./kube-resource:/app
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - kube-resource-mongo
+      - kube-kafka
+
+  kube-resource-mongo:
+    image: jkostov/mongo:4.2
+    container_name: kube-resource-mongo
+    expose:
+      - "27017"
+    volumes:
+      - kube-resource-mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root1234
+      - MONGO_INITDB_DATABASE=database
+
+  kube-frontend:
+    build:
+      context: ./kube-frontend
+      args:
+        - NODE_ENV=development
+    image: kube-frontend
+    container_name: kube-frontend
+    ports:
+      - "4200:4200"
+      - "49153:49153"
+    volumes:
+      - ./kube-frontend:/app
+    environment:
+      - NODE_ENV=development
+
+  kube-zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+    container_name: kube-zookeeper
+    ports:
+      - "2181:2181"
+  kube-kafka:
+    image: wurstmeister/kafka:2.12-2.4.0
+    container_name: kube-kafka
+    expose:
+      - "9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: kube-zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  kube-cluster-mongo-data: {}
+  kube-resource-mongo-data: {}
