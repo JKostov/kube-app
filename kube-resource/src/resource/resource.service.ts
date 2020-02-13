@@ -1,0 +1,19 @@
+import { Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { Resource } from './resource.model';
+import { CreateResourceDto } from './dto/create-resource.dto';
+
+@Injectable()
+export class ResourceService {
+  constructor(@InjectModel('Resource') private readonly resourceModel: Model<Resource>) { }
+
+  async findAll(clustedId: string): Promise<Resource[]> {
+    return await this.resourceModel.find({ clustedId }).exec();
+  }
+
+  async create(createResourceDto: CreateResourceDto): Promise<Resource> {
+    const createdResource = new this.resourceModel(createResourceDto);
+    return await createdResource.save();
+  }
+}

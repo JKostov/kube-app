@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
-  app.setGlobalPrefix('/cluster');
+  app.setGlobalPrefix('/resource');
   app.useGlobalPipes(new ValidationPipe());
   app.use(helmet());
   app.enableCors();
