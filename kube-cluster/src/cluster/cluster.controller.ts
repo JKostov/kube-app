@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Req, Res } from '@nestjs/common';
+import {Body, Controller, Get, HttpStatus, Param, Post, Req, Res} from '@nestjs/common';
 import { ClusterService } from './cluster.service';
 import { CreateClusterDto } from './dto/create-cluster.dto';
 
@@ -12,6 +12,13 @@ export class ClusterController {
     const clusters = await this.clusterService.findAll();
 
     return res.status(HttpStatus.OK).json(clusters);
+  }
+
+  @Get(':id')
+  public async getClusterById(@Param() param, @Res() res) {
+    const cluster = await this.clusterService.findById(param.id);
+
+    return res.status(HttpStatus.OK).json(cluster);
   }
 
   @Post()

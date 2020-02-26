@@ -8,8 +8,8 @@ import { CreateResourceDto } from './dto/create-resource.dto';
 export class ResourceService {
   constructor(@InjectModel('Resource') private readonly resourceModel: Model<Resource>) { }
 
-  async findAll(clustedId: string): Promise<Resource[]> {
-    return await this.resourceModel.find({ clustedId }).exec();
+  async findAll(clusterId: string): Promise<Resource[]> {
+    return await this.resourceModel.find({ clusterId }).exec();
   }
 
   async create(createResourceDto: CreateResourceDto): Promise<Resource> {

@@ -6,8 +6,33 @@
   <table mat-table [dataSource]="clusters" class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name</th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="ipAddress">
+      <th mat-header-cell *matHeaderCellDef>IP Address</th>
+      <td mat-cell *matCellDef="let element">{{ element.ipAddress }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cpus">
+      <th mat-header-cell *matHeaderCellDef># of CPUs</th>
+      <td mat-cell *matCellDef="let element">{{ element.cpus }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="memory">
+      <th mat-header-cell *matHeaderCellDef>RAM memory (MB)</th>
+      <td mat-cell *matCellDef="let element">{{ element.memory }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="storageMemory">
+      <th mat-header-cell *matHeaderCellDef>Storage memory (GB)</th>
+      <td mat-cell *matCellDef="let element">{{ element.storageMemory }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="resources">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element"><button mat-raised-button [routerLink]="['/', element._id, 'resources']" color="primary">Resources</button></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

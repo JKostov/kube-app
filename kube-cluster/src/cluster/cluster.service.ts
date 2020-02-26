@@ -9,11 +9,15 @@ export class ClusterService {
   constructor(@InjectModel('Cluster') private readonly clusterModel: Model<Cluster>) { }
 
   async findAll(): Promise<Cluster[]> {
-    return await this.clusterModel.find().exec();
+    return this.clusterModel.find().exec();
+  }
+
+  async findById(id: string): Promise<Cluster> {
+    return this.clusterModel.findOne({ _id: id }).exec();
   }
 
   async create(createClusterDto: CreateClusterDto): Promise<Cluster> {
     const createdCluster = new this.clusterModel(createClusterDto);
-    return await createdCluster.save();
+    return createdCluster.save();
   }
 }

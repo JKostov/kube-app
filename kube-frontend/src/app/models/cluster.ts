@@ -1,6 +1,6 @@
 
 export class Cluster {
-  id: string;
+  _id: string;
   name: string;
   ipAddress: string;
   cpus: number;

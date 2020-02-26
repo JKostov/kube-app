@@ -12,25 +12,23 @@ import { first } from 'rxjs/operators';
 })
 export class ClustersComponent implements OnInit {
   clusters: Cluster[] = [];
-  displayedColumns: string[] = ['name'];
+  displayedColumns: string[] = ['name', 'ipAddress', 'cpus', 'memory', 'storageMemory', 'resources'];
 
   constructor(public dialog: MatDialog, private dataService: DataService) {
   }
 
   ngOnInit(): void {
-    // this.dataService.getClusters().subscribe(val => this.clusters = val);
-    const asd = new Cluster();
-    asd.name = 'asd';
-    this.clusters.push(asd);
-    this.clusters.push(asd);
-    this.clusters.push(asd);
-
+    this.dataService.getClusters().pipe(first()).subscribe(val => this.clusters = val);
   }
 
 
   onAddClick(): void {
-    const dialog = this.dialog.open<AddClusterComponent, null, Cluster>(AddClusterComponent);
+    const dialog = this.dialog.open<AddClusterComponent, null, Cluster>(AddClusterComponent, {
+      minWidth: '400px',
+    });
 
-    dialog.afterClosed().pipe(first()).subscribe(val => console.log(val));
+    dialog.afterClosed().pipe(first()).subscribe(val => {
+      this.dataService.createCluster(val).pipe(first()).subscribe(newCluster => this.clusters = [...this.clusters, newCluster]);
+    });
   }
 }

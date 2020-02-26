@@ -1,0 +1,32 @@
+<div class="add-resource">
+  <div class="add-resource-title">Add new resource</div>
+  <form class="add-resource-form">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput type="text" [formControl]="nameFormControl" placeholder="Name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>IP Address</mat-label>
+      <input matInput type="text" [formControl]="ipAddressFormControl" placeholder="IP">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Number of CPUs</mat-label>
+      <input matInput type="number" min="1" [formControl]="cpusFormControl" placeholder="# of CPUs">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>RAM memory (MB)</mat-label>
+      <input matInput type="number" min="1" [formControl]="memoryFormControl" placeholder="RAM">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Storage memory (GB)</mat-label>
+      <input matInput type="number" min="1" [formControl]="storageMemoryFormControl" placeholder="Storage">
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button color="primary" (click)="onCreate()">Create new</button>
+
+</div>

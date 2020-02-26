@@ -1,4 +1,5 @@
 <div class="add-cluster">
+  <div class="add-cluster-title">Create new cluster</div>
   <form class="add-cluster-form">
     <mat-form-field>
       <mat-label>Name</mat-label>
@@ -9,8 +10,8 @@
       <mat-label>IP Address</mat-label>
       <input matInput [formControl]="ipAddressFormControl" placeholder="IP">
     </mat-form-field>
-
-    <button mat-raised-button color="primary" (click)="onCreate()">Create new</button>
   </form>
+
+  <button mat-raised-button color="primary" (click)="onCreate()">Create new</button>
 
 </div>

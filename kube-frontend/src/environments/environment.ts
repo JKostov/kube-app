@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  clustersApi: 'localhost:3000',
-  resourcesApi: 'localhost:3001',
+  clustersApi: 'http://localhost:3000/cluster',
+  resourcesApi: 'http://localhost:3001/resource',
 };
 
 /*

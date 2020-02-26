@@ -58,6 +58,8 @@ services:
     container_name: kube-resource-mongo
     expose:
       - "27017"
+    #ports:
+    #  - "27017:27017"
     volumes:
       - kube-resource-mongo-data:/data/db
     environment:

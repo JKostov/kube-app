@@ -18,9 +18,27 @@ export class DataService {
     return this.http.get<Cluster[]>(url);
   }
 
+  getClusterById(clusterId: string): Observable<Cluster> {
+    const url = `${environment.clustersApi}/${clusterId}`;
+
+    return this.http.get<Cluster>(url);
+  }
+
+  createCluster(cluster: Cluster): Observable<Cluster> {
+    const url = `${environment.clustersApi}`;
+
+    return this.http.post<Cluster>(url, cluster);
+  }
+
   getResources(clustedId: string): Observable<Resource[]> {
     const url = `${environment.resourcesApi}/cluster/${clustedId}`;
 
     return this.http.get<Resource[]>(url);
+  }
+
+  createResource(resource: Resource): Observable<Resource> {
+    const url = `${environment.resourcesApi}/cluster/${resource.clusterId}`;
+
+    return this.http.post<Resource>(url, resource);
   }
 }
