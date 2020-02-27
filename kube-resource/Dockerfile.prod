@@ -1,0 +1,29 @@
+FROM node:12.13.1-alpine3.10 as builder
+
+RUN apk add yarn
+
+RUN mkdir -p /app/src
+WORKDIR /app
+
+COPY package.json /app/package.json
+COPY yarn.lock /app/yarn.lock
+COPY . /app
+
+RUN yarn install --frozen-lockfile
+
+RUN ["yarn", "run", "build"]
+
+## production environment ##
+FROM node:12.13.1-alpine3.10
+
+RUN mkdir -p /app
+WORKDIR /app
+
+COPY package.json ./
+COPY yarn.lock ./
+
+RUN yarn install --frozen-lockfile --prod
+
+COPY --from=builder /app/dist ./dist
+
+CMD ["yarn", "run", "start:prod"]
