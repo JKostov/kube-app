@@ -22,6 +22,6 @@ export class ResourceService {
   }
 
   async deleteResourcesForCluster(clusterId: string): Promise<void> {
-    return this.resourceModel.delete({ clusterId }).exec();
+    return this.resourceModel.deleteMany({ clusterId }).exec();
   }
 }

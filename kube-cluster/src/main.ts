@@ -20,11 +20,17 @@ async function bootstrap() {
         clientId: 'kube-cluster',
         brokers: [configService.get('KAFKA_URL')],
       },
+      consumer: {
+        groupId: 'kube-cluster',
+      },
+      producer: { },
     },
   });
   micro.useGlobalPipes(new ValidationPipe());
 
-  micro.listen(() => console.log('Connected to kafka.'));
+  // micro.listen(() => console.log('Connected to kafka.'));
   await app.listen(configService.get('APP_PORT'));
+  await micro.listenAsync();
+  console.log('INIT DONE!');
 }
 bootstrap();

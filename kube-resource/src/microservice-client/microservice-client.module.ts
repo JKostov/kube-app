@@ -14,6 +14,9 @@ import { ClientKafka, ClientProxyFactory, Transport } from '@nestjs/microservice
               clientId: 'kube-resource',
               brokers: [configService.get('KAFKA_URL')],
             },
+            consumer: {
+              groupId: 'kube-resource',
+            },
           },
         })
       },
