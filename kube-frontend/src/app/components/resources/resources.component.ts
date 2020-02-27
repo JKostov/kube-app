@@ -15,7 +15,7 @@ import { AddResourceComponent } from '@app/components/add-resource/add-resource.
 export class ResourcesComponent implements OnInit, OnDestroy {
   cluster: Cluster;
   resources: Resource[] = [];
-  displayedColumns: string[] = ['name', 'ipAddress', 'cpus', 'memory', 'storageMemory'];
+  displayedColumns: string[] = ['name', 'ipAddress', 'cpus', 'memory', 'storageMemory', 'actions'];
   destroy$ = new Subject<void>();
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, private dataService: DataService) { }
@@ -41,6 +41,12 @@ export class ResourcesComponent implements OnInit, OnDestroy {
       val.clusterId = this.cluster._id;
       this.dataService.createResource(val).pipe(first()).subscribe(newResource => this.resources = [...this.resources, newResource]);
     });
+  }
+
+  onDeleteClick(resource: Resource): void {
+    this.dataService.deleteResource(resource._id).pipe(first()).subscribe(
+      deletedResource => this.resources = this.resources.filter(r => r._id !== deletedResource._id)
+    );
   }
 
   getSum(property: keyof Resource): number {

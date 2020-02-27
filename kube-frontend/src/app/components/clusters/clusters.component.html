@@ -15,6 +15,11 @@
       <td mat-cell *matCellDef="let element">{{ element.ipAddress }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="workers">
+      <th mat-header-cell *matHeaderCellDef># of workers</th>
+      <td mat-cell *matCellDef="let element">{{ element.workers }}</td>
+    </ng-container>
+
     <ng-container matColumnDef="cpus">
       <th mat-header-cell *matHeaderCellDef># of CPUs</th>
       <td mat-cell *matCellDef="let element">{{ element.cpus }}</td>
@@ -32,7 +37,10 @@
 
     <ng-container matColumnDef="resources">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let element"><button mat-raised-button [routerLink]="['/', element._id, 'resources']" color="primary">Resources</button></td>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="onDeleteClick(element)"><mat-icon aria-hidden="false" aria-label="Delete">delete</mat-icon></button>
+        <button mat-raised-button [routerLink]="['/', element._id, 'resources']" color="primary">Resources</button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

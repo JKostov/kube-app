@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { ClusterModule } from './cluster/cluster.module';
+import { MicroserviceClientModule } from './microservice-client/microservice-client.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ClusterModule } from './cluster/cluster.module';
     }),
     DatabaseModule,
     ClusterModule,
+    MicroserviceClientModule,
   ],
   providers: [AppService],
 })

@@ -19,7 +19,7 @@ async function bootstrap() {
       client: {
         clientId: 'kube-cluster',
         brokers: [configService.get('KAFKA_URL')],
-      }
+      },
     },
   });
   micro.useGlobalPipes(new ValidationPipe());

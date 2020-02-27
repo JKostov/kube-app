@@ -16,14 +16,14 @@ services:
       - NODE_ENV=development
       - APP_PORT=3000
       - KAFKA_URL=kube-kafka:9092
-      - MONGO_URL=mongodb://root:root1234@kube-custer-mongo:27017/database
+      - MONGO_URL=mongodb://root:root1234@kube-cluster-mongo:27017/database
     depends_on:
-      - kube-custer-mongo
+      - kube-cluster-mongo
       - kube-kafka
 
-  kube-custer-mongo:
+  kube-cluster-mongo:
     image: jkostov/mongo:4.2
-    container_name: kube-custer-mongo
+    container_name: kube-cluster-mongo
     expose:
       - "27017"
     volumes:
@@ -58,8 +58,6 @@ services:
     container_name: kube-resource-mongo
     expose:
       - "27017"
-    #ports:
-    #  - "27017:27017"
     volumes:
       - kube-resource-mongo-data:/data/db
     environment:

@@ -30,6 +30,12 @@ export class DataService {
     return this.http.post<Cluster>(url, cluster);
   }
 
+  deleteCluster(clusterId: string): Observable<Cluster> {
+    const url = `${environment.clustersApi}/${clusterId}`;
+
+    return this.http.delete<Cluster>(url);
+  }
+
   getResources(clustedId: string): Observable<Resource[]> {
     const url = `${environment.resourcesApi}/cluster/${clustedId}`;
 
@@ -40,5 +46,11 @@ export class DataService {
     const url = `${environment.resourcesApi}/cluster/${resource.clusterId}`;
 
     return this.http.post<Resource>(url, resource);
+  }
+
+  deleteResource(resourceId: string): Observable<Resource> {
+    const url = `${environment.resourcesApi}/${resourceId}`;
+
+    return this.http.delete<Resource>(url);
   }
 }

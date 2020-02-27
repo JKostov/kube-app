@@ -1,9 +1,9 @@
 
-export class Cluster {
-  id: string;
+export class Resource {
+  _id: string;
+  clusterId: string;
   name: string;
   ipAddress: string;
-  workers: number;
   cpus: number;
   memory: number;
   storageMemory: number;

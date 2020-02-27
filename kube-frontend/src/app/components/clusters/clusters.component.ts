@@ -12,7 +12,7 @@ import { first } from 'rxjs/operators';
 })
 export class ClustersComponent implements OnInit {
   clusters: Cluster[] = [];
-  displayedColumns: string[] = ['name', 'ipAddress', 'cpus', 'memory', 'storageMemory', 'resources'];
+  displayedColumns: string[] = ['name', 'ipAddress', 'workers', 'cpus', 'memory', 'storageMemory', 'resources'];
 
   constructor(public dialog: MatDialog, private dataService: DataService) {
   }
@@ -30,5 +30,11 @@ export class ClustersComponent implements OnInit {
     dialog.afterClosed().pipe(first()).subscribe(val => {
       this.dataService.createCluster(val).pipe(first()).subscribe(newCluster => this.clusters = [...this.clusters, newCluster]);
     });
+  }
+
+  onDeleteClick(cluster: Cluster): void {
+    this.dataService.deleteCluster(cluster._id).pipe(first()).subscribe(
+      deletedCluster => this.clusters = this.clusters.filter(c => c._id !== deletedCluster._id)
+    );
   }
 }

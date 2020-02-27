@@ -1,7 +1,7 @@
 
 export class Resource {
   id: string;
-  clustedId: string;
+  clusterId: string;
   name: string;
   ipAddress: string;
   cpus: number;

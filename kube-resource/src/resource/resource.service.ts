@@ -16,4 +16,12 @@ export class ResourceService {
     const createdResource = new this.resourceModel(createResourceDto);
     return await createdResource.save();
   }
+
+  async delete(resourceId: string): Promise<Resource> {
+    return this.resourceModel.findOneAndRemove({ _id: resourceId }).exec();
+  }
+
+  async deleteResourcesForCluster(clusterId: string): Promise<void> {
+    return this.resourceModel.delete({ clusterId }).exec();
+  }
 }
