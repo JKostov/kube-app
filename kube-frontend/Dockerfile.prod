@@ -1,0 +1,22 @@
+FROM node:12.13.1-alpine3.10 as builder
+
+RUN apk add yarn
+
+RUN mkdir -p /app/src
+WORKDIR /app
+
+COPY package.json /app/package.json
+COPY yarn.lock /app/yarn.lock
+
+RUN yarn install --frozen-lockfile
+
+COPY . /app
+
+RUN ["yarn", "run", "build --prod --output-path=dist"]
+
+## production environment ##
+FROM jkostov/nginx:1.17.8-alpine
+
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]
