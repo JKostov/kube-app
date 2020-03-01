@@ -12,7 +12,7 @@ RUN yarn install --frozen-lockfile
 
 COPY . /app
 
-RUN ["yarn", "run", "build --prod --output-path=dist"]
+RUN yarn run build --prod --output-path=dist
 
 ## production environment ##
 FROM jkostov/nginx:1.17.8-alpine

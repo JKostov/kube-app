@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  clustersApi: 'localhost:3000',
-  resourcesApi: 'localhost:3001',
+  clustersApi: 'http://localhost:3000/cluster',
+  resourcesApi: 'http://localhost:3001/resource',
 };
