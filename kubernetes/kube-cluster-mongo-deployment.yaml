@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-cluster-mongo
+  labels:
+    app: kube-cluster-mongo
+spec:
+  type: ClusterIP
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    app: kube-cluster-mongo
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-cluster-mongo
+  labels:
+    app: kube-cluster-mongo
+spec:
+  selector:
+    matchLabels:
+      app: kube-cluster-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kube-cluster-mongo
+    spec:
+      containers:
+        - name: kube-cluster-mongo
+          image: jkostov/mongo:4.2
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo-data
+          envFrom:
+            - secretRef:
+                name: kube-cluster-mongo-secrets
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim:
+            claimName: kube-cluster-mongo-persistent-volume

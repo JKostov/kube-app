@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-cluster
+  labels:
+    app: kube-cluster
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: kube-cluster
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-cluster
+  labels:
+    app: kube-cluster
+spec:
+  selector:
+    matchLabels:
+      app: kube-cluster
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kube-cluster
+    spec:
+      containers:
+        - name: kube-cluster
+          image: jkostov/kube-cluster:latest
+          envFrom:
+            - secretRef:
+                name: kube-cluster-secrets

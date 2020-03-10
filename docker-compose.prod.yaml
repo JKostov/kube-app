@@ -33,7 +33,7 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - APP_PORT=3001
       - KAFKA_URL=prod-kube-kafka:9092
       - MONGO_URL=mongodb://root:root1234@prod-kube-resource-mongo:27017/database
@@ -59,7 +59,7 @@ services:
     ports:
       - "80:80"
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
 
   prod-kube-zookeeper:
     image: wurstmeister/zookeeper:3.4.6

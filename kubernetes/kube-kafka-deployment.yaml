@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-kafka
+  labels:
+    app: kube-kafka
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9092
+      targetPort: 9092
+  selector:
+    app: kube-kafka
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-kafka
+  labels:
+    app: kube-kafka
+spec:
+  selector:
+    matchLabels:
+      app: kube-kafka
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kube-kafka
+    spec:
+      containers:
+        - name: kube-kafka
+          image: wurstmeister/kafka:2.12-2.4.0
+          env:
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              value: kube-zookeeper:2181
+            - name: KAFKA_ADVERTISED_HOST_NAME
+              value: kube-kafka

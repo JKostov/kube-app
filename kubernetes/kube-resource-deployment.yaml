@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-resource
+  labels:
+    app: kube-resource
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3001
+      targetPort: 3001
+  selector:
+    app: kube-resource
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-resource
+  labels:
+    app: kube-resource
+spec:
+  selector:
+    matchLabels:
+      app: kube-resource
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kube-resource
+    spec:
+      containers:
+        - name: kube-resource
+          image: jkostov/kube-resource:latest
+          envFrom:
+            - secretRef:
+                name: kube-resource-secrets

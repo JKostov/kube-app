@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: kube-cluster-mongo-persistent-volume
+  name: kube-cluster-mongo-persistent-volume
+spec:
+  selector:
+    matchLabels:
+      app: kube-cluster-mongo-persistent-volume
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
