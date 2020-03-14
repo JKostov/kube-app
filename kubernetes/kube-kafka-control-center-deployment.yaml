@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-kafka-control-center
+  labels:
+    app: kube-kafka-control-center
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9021
+      targetPort: 9021
+  selector:
+    app: kube-kafka-control-center
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-kafka-control-center
+  labels:
+    app: kube-kafka-control-center
+spec:
+  selector:
+    matchLabels:
+      app: kube-kafka-control-center
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kube-kafka-control-center
+    spec:
+      containers:
+        - name: kube-kafka-control-center
+          image: confluentinc/cp-enterprise-control-center:5.4.0
+          env:
+            - name: CONTROL_CENTER_BOOTSTRAP_SERVERS
+              value: kube-kafka:9092
+            - name: CONTROL_CENTER_ZOOKEEPER_CONNECT
+              value: kube-zookeeper:2181
+            - name: CONTROL_CENTER_REPLICATION_FACTOR
+              value: "1"
+            - name: CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS
+              value: "1"
+            - name: CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS
+              value: "1"
+            - name: CONFLUENT_METRICS_TOPIC_REPLICATION
+              value: "1"
+            - name: PORT
+              value: "9021"

@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: kube-ingress
+#  annotations:
+#    kubernetes.io/ingress.class: nginx
+#    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+#    nginx.ingress.kubernetes.io/configuration-snippet: |
+#      rewrite /$1 break;
+#      rewrite ^/cluster/(.*)$ /$1 break;
+#      rewrite ^/resource/(.*)$ /$1 break;
+spec:
+  rules:
+    - host: kube-app.test
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kube-frontend
+              servicePort: 80
+          - path: /cluster
+            backend:
+              serviceName: kube-cluster
+              servicePort: 3000
+          - path: /resource
+            backend:
+              serviceName: kube-resource
+              servicePort: 3001
+          - path: /kafka-control-center
+            backend:
+              serviceName: kube-kafka-control-center
+              servicePort: 9021

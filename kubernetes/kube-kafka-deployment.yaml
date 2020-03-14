@@ -34,6 +34,26 @@ spec:
           image: wurstmeister/kafka:2.12-2.4.0
           env:
             - name: KAFKA_ZOOKEEPER_CONNECT
-              value: kube-zookeeper:2181
+              value: "kube-zookeeper:2181"
             - name: KAFKA_ADVERTISED_HOST_NAME
-              value: kube-kafka
+              value: "kube-kafka"
+            - name: KAFKA_CREATE_TOPICS
+              value: "cluster.deleted:1:1,resource.created:1:1,resource.deleted:1:1"
+#            - name: KAFKA_LISTENERS
+#              value: "local://kube-kafka:9092"
+#            - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+#              value: "local:PLAINTEXT"
+#            - name: KAFKA_ADVERTISED_LISTENERS
+#              value: "local://localhost:9092"
+#            - name: KAFKA_INTER_BROKER_LISTENER_NAME
+#              value: "kube-kafka"
+#            - name: ENABLE_AUTO_EXTEND
+#              value: "true"
+#            - name: KAFKA_RESERVED_BROKER_MAX_ID
+#             value: "999999999"
+#            - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
+#              value: "true"
+#            - name: KAFKA_PORT
+#              value: "9092"
+#            - name: KAFKA_ADVERTISED_PORT
+#             value: "9092"
