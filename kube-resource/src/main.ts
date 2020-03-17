@@ -2,8 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import * as helmet from 'helmet';
 import { AppModule } from './app.module';
-import { ValidationPipe } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import * as morgan from 'morgan';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,6 +13,7 @@ async function bootstrap() {
   app.setGlobalPrefix('/resource');
   app.useGlobalPipes(new ValidationPipe());
   app.use(helmet());
+  app.use(morgan('tiny'));
   app.enableCors();
   const micro = app.connectMicroservice({
     transport: Transport.KAFKA,
@@ -34,3 +36,4 @@ async function bootstrap() {
   console.log('INIT DONE!');
 }
 bootstrap();
+
