@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-resource-mongo
+  labels:
+    app: kube-resource-mongo
+spec:
+  type: ClusterIP
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    app: kube-resource-mongo
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kube-resource-mongo
+spec:
+  selector:
+    matchLabels:
+      app: kube-resource-mongo
+  serviceName: "kube-resource-mongo"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kube-resource-mongo
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: kube-resource-mongo
+        image: jkostov/mongo:4.2
+        volumeMounts:
+        - name: kube-resource-mongo-data
+          mountPath: data/db
+        envFrom:
+        - secretRef:
+            name: kube-resource-mongo-secrets
+  volumeClaimTemplates:
+  - metadata:
+      name: kube-resource-mongo-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 500Mi
