@@ -8,3 +8,5 @@ minikube dashboard
 # kubectl get services
 # minikube service kube-frontend
 # kubectl logs <pod-name>
+
+# test
